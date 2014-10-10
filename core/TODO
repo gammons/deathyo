@@ -1,0 +1,11 @@
+TODO:
+* [DONE] death sprite
+* [DONE] death movement
+* Death teleportation
+* Collision detection in tilemap
+* People graphics
+* People AI
+* Shooting things (http://gamedev.stackexchange.com/questions/28334/make-objects-follow-a-strict-path-xna)
+* killing people
+* guranga / monster kills
+* Timing / winning the game
