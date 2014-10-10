@@ -16,73 +16,85 @@ public class DeathView {
   private Animation walkDownAnimation;
   private Animation walkLeftAnimation;
   private Animation walkRightAnimation;
-  
+
   private float stateTime;
   private boolean isWalking;
   private TextureRegion currentTexture;
-  public final int TEXTURE_ROWS = 3;
-  public final int TEXTURE_COLS = 2;
-  
+  private final int TEXTURE_ROWS = 3;
+  private final int TEXTURE_COLS = 2;
+
+  private boolean killBallDeployed;
+
+  private KillBallView killBall;
+
   public DeathView() {
     death = new Death();
     Texture walkSheet = new Texture(Gdx.files.internal("art/death.png"));
-    TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/TEXTURE_COLS, walkSheet.getHeight()/TEXTURE_ROWS);
-    
-/*    TextureRegion[] walkFrames = new TextureRegion[TEXTURE_COLS * TEXTURE_ROWS];
-    int index = 0;
-    for (int i = 0; i < 1; i++) {
-        for (int j = 0; j < 2; j++) {
-            walkFrames[index++] = tmp[i][j];
-        }
-    }*/
+    TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()
+        / TEXTURE_COLS, walkSheet.getHeight() / TEXTURE_ROWS);
+
     walkRightAnimation = new Animation(0.15f, tmp[0]);
     walkLeftAnimation = new Animation(0.15f, tmp[1]);
     walkUpAnimation = new Animation(0.15f, tmp[2]);
     walkDownAnimation = walkRightAnimation;
-    
     currentAnimation = walkRightAnimation;
+    killBallDeployed = false;
 
   }
-  
-  
+
   public void render(SpriteBatch spriteBatch) {
     if (isWalking)
       stateTime += Gdx.graphics.getDeltaTime();
 
     TextureRegion texture = currentAnimation.getKeyFrame(stateTime, true);
-    spriteBatch.begin();
-    spriteBatch.draw(texture, death.position.x, death.position.y);             // #17
-    spriteBatch.end();
+
+    spriteBatch.draw(texture, death.position.x, death.position.y);
+    renderKillBall(spriteBatch);
+
     isWalking = false;
 
   }
-  
+
+  public void renderKillBall(SpriteBatch spriteBatch) {
+    if (killBallDeployed) {
+      killBall.update(Gdx.graphics.getDeltaTime());
+      killBall.render(spriteBatch);
+
+    }
+  }
+
   public void moveUp() {
     isWalking = true;
     currentAnimation = walkUpAnimation;
     death.moveUp();
   }
-  
+
   public void moveDown() {
     isWalking = true;
     currentAnimation = walkDownAnimation;
     death.moveDown();
   }
-  
+
   public void moveLeft() {
     isWalking = true;
     currentAnimation = walkLeftAnimation;
     death.moveLeft();
   }
-  
+
   public void moveRight() {
     isWalking = true;
     currentAnimation = walkRightAnimation;
     death.moveRight();
   }
-  
+
   public Vector2 position() {
     return death.position;
+  }
+
+  public void shootKillBall(Vector2 coords) {
+    killBallDeployed = true;
+    killBall = new KillBallView(new Vector2(death.position.x, death.position.y));
+    killBall.shootToward(coords.x, coords.y);
   }
 
 }

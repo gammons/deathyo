@@ -6,7 +6,7 @@ public class Death extends Entity {
   
   public Death() {
     super();
-    speed = 3;
+    speed = 2;
   }
   
 
