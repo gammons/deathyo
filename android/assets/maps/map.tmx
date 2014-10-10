@@ -2,15 +2,70 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="sheet_6" tilewidth="16" tileheight="16">
   <image source="../sheet_6.png" width="128" height="208"/>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJzTY2Bg0KMTZgViNhyYnQzzePHI8VPZPD0c7qbEPGq5D+RXMRyYXPNIdZsEEIsi2cuHxBaHypNjJoxthkOcHGwLxLpAbE+leBk1j3ysDzXPjgbus0PClJjnCsRuSJha5qJjWptLbTNBNADqg0VA
+   eJzTY2Bg0KMTZgViNhyYnQzzePHI8VPZPD0c7qbEPGq5D+RXMRyYXPNIdZsEEIsi2cuHxBaHypNjJoxthkOcHGwLxLpAbE+leKGGeeZQPFjdRyvz9KHm2dHAfXZImBLzXIHYDQljM9ecQjv0sJhLiZmuWMylVvi6IZkHADoqRbU=
   </data>
  </layer>
  <layer name="Tile Layer 2" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJzzZGBg8KIS9gbiQAbcwBcP9sOiPpiAefhAGJXNi8GByTUPFxjM5lESfpSYp4BEK+BURR33MQIxExXN4wRiLhzmqQKxGhpWJ8JMfSq6DxmMmjf8zYsE4igq4WggBgAfSR3Q
+   eJzzZGBg8KIS9gbiQAbcwBcP9sOiPpiAefhAGJXNi8GByTUPFxjM5lESfpSYp4BEK+BURR33MQIxExXN4wRiLhzmqQKxGhpWJ8JMfSq6DxkMtHnOQGwGxdQwD5vZ5hSaZ4PDXHLNAwE3HOZSGh/o5oLMiwTiKCrhaCAGAKUqISs=
   </data>
  </layer>
 </map>
