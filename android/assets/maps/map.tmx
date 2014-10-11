@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="3" height="3" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="sheet_6" tilewidth="16" tileheight="16">
   <image source="../sheet_6.png" width="128" height="208"/>
   <tile id="4">
@@ -27,6 +27,11 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="15">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
   <tile id="20">
    <properties>
     <property name="blocked" value=""/>
@@ -38,6 +43,11 @@
    </properties>
   </tile>
   <tile id="22">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="31">
    <properties>
     <property name="blocked" value=""/>
    </properties>
@@ -57,15 +67,50 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="72">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="73">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="74">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="80">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="82">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="88">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="89">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="90">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="20">
+ <layer name="Tile Layer 1" width="3" height="3">
   <data encoding="base64" compression="zlib">
-   eJzTY2Bg0KMTZgViNhyYnQzzePHI8VPZPD0c7qbEPGq5D+RXMRyYXPNIdZsEEIsi2cuHxBaHypNjJoxthkOcHGwLxLpAbE+leKGGeeZQPFjdRyvz9KHm2dHAfXZImBLzXIHYDQljM9ecQjv0sJhLiZmuWMylVvi6IZkHADoqRbU=
-  </data>
- </layer>
- <layer name="Tile Layer 2" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJzzZGBg8KIS9gbiQAbcwBcP9sOiPpiAefhAGJXNi8GByTUPFxjM5lESfpSYp4BEK+BURR33MQIxExXN4wRiLhzmqQKxGhpWJ8JMfSq6DxkMtHnOQGwGxdQwD5vZ5hSaZ4PDXHLNAwE3HOZSGh/o5oLMiwTiKCrhaCAGAKUqISs=
+   eJzTY2BgUABiPRxYAIgBHkQBcw==
   </data>
  </layer>
 </map>

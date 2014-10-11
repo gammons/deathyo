@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gammons.deathyo.entities.GameMap;
 import com.gammons.deathyo.view.DeathView;
@@ -24,6 +27,8 @@ public class GameScreen implements Screen {
   private GameInputProcessor input;
 
   private GameMap map = new GameMap();
+
+  private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
   public GameScreen(GameInputProcessor _input) {
     input = _input;
@@ -45,30 +50,40 @@ public class GameScreen implements Screen {
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    handleInput();
+    handleInput(delta);
 
     renderer.setView(camera);
     renderer.render();
+
     camera.update();
-
-    spriteBatch.begin();
-
-    deathView.render(spriteBatch);
-    spriteBatch.end();
+    // debugShapes();
+    renderer.getSpriteBatch().begin();
+    deathView.draw(renderer.getSpriteBatch());
+    renderer.getSpriteBatch().end();
 
   }
 
-  private void handleInput() {
+  private void debugShapes() {
+    shapeRenderer.setProjectionMatrix(camera.combined);
+    shapeRenderer.begin(ShapeType.Line);
+    shapeRenderer.setColor(1, 1, 0, 1);
+    Rectangle rect = new Rectangle(deathView.getX(), deathView.getY(),
+        deathView.getWidth(), deathView.getHeight());
+    shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+    shapeRenderer.end();
+  }
+
+  private void handleInput(float delta) {
     if (input.isDownPressed())
-      deathView.moveDown();
+      deathView.moveDown(delta);
     if (input.isLeftPressed())
-      deathView.moveLeft();
+      deathView.moveLeft(delta);
     if (input.isRightPressed())
-      deathView.moveRight();
+      deathView.moveRight(delta);
     if (input.isUpPressed())
-      deathView.moveUp();
-    if (input.isMousePressed())
-      deathView.shootKillBall(input.getMouseCoords());
+      deathView.moveUp(delta);
+    // if (input.isMousePressed())
+    // deathView.shootKillBall(input.getMouseCoords());
   }
 
   @Override
@@ -107,8 +122,7 @@ public class GameScreen implements Screen {
 
   private void addDeath() {
     deathView = new DeathView();
-    deathView.death.position.x = 50;
-    deathView.death.position.y = 50;
+    deathView.setPosition(0, 32);
   }
 
 }
