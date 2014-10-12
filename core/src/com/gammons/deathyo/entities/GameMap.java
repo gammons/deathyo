@@ -1,5 +1,6 @@
 package com.gammons.deathyo.entities;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.maps.MapLayer;
@@ -36,11 +37,14 @@ public class GameMap {
     tileWidth = collisionLayer.getTileWidth();
     width = collisionLayer.getWidth();
     height = collisionLayer.getHeight();
+    System.out.println(width);
+    System.out.println(height);
+    cells = new GameCell[width][height];
     // debugMap();
     processMap();
   }
 
-  public void debugMap() {
+  private void processMap() {
     Iterator<MapLayer> i = map.getLayers().iterator();
     while (i.hasNext()) {
       System.out.println("######### LAYER ##########");
@@ -49,26 +53,15 @@ public class GameMap {
       for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
           Cell cell = tl.getCell(x, y);
-          System.out.println("Cell at (" + x + "," + y + ") is "
-              + cell.getTile().getId());
-        }
-      }
-    }
-  }
-
-  public void processMap() {
-    Iterator<MapLayer> i = map.getLayers().iterator();
-    while (i.hasNext()) {
-      System.out.println("######### LAYER ##########");
-
-      TiledMapTileLayer tl = (TiledMapTileLayer) i.next();
-      for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-          Cell cell = tl.getCell(x, y);
-          GameCell gc = new GameCell();
-          gc.id = cell.getTile().getId();
-          gc.gameCoords = new Rectangle(x * width, y * height, width, height);
-          gc.collision = cell.getTile().getProperties()
+          if (cell == null)
+            continue;
+          if (cells[x][y] == null) {
+            cells[x][y] = new GameCell();
+            cells[x][y].gameCoords = new Rectangle(x * tileWidth, y
+                * tileHeight, tileWidth, tileHeight);
+          }
+          cells[x][y].id = cell.getTile().getId();
+          cells[x][y].collision = cell.getTile().getProperties()
               .containsKey(BLOCKED_KEY);
 
         }
@@ -85,60 +78,109 @@ public class GameMap {
   }
 
   public boolean willCollideLeft(Rectangle entityPosition) {
-    // gather a list of cells that touch the top left and bottom right
-    // cells are rectangles too!
-    /*
-     * 1. Create polygons out of our cells. can be done beforehand. 2. Find the
-     * cells that intersect the left line of entityPosition
-     * (intersectLinePolygon) 3. determine of those cells are collision cells.
-     */
-    Intersector i = new Intersector();
-    // i.intersectRectangles(position, rectangle2, null);
-    return false;
-  }
-
-  public boolean willCollideRight(Vector2 position) {
-    Vector2 currentCell = positionToCell(position);
-    return isCellBlocked(new Vector2(currentCell.x + 1, currentCell.y));
-  }
-
-  public boolean willCollideUp(Vector2 position) {
-    Vector2 currentCell = positionToCell(position);
-    return isCellBlocked(new Vector2(currentCell.x, currentCell.y + 1));
-  }
-
-  public boolean willCollideDown(Vector2 position) {
-    Vector2 currentCell = positionToCell(position);
-    return isCellBlocked(new Vector2(currentCell.x, currentCell.y - 1));
-  }
-
-  private Vector2 positionToCell(Vector2 position) {
-
-    Vector2 v = new Vector2((int) (position.x / (tileWidth * 2)),
-        (int) (position.y / (tileHeight * 2)));
-
-    // reverse height, as our tile starts at top left
-    // v.y = (height - v.y);
-
-    return v;
-  }
-
-  private boolean isCellBlocked(Vector2 currentCell) {
-    System.out.println("looking at cell at (" + currentCell + ")");
-    Iterator<MapLayer> i = map.getLayers().iterator();
+    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Vector2 tileCenter = new Vector2();
+    Vector2 entityCenter = new Vector2();
+    GameCell c;
     while (i.hasNext()) {
-      TiledMapTileLayer tl = (TiledMapTileLayer) i.next();
-      Cell cell = tl.getCell((int) (currentCell.x), (int) currentCell.y);
-      boolean collides = cell != null && cell.getTile() != null
-          && cell.getTile().getProperties().containsKey(BLOCKED_KEY);
-      if (collides) {
+      c = (GameCell) i.next();
 
-        System.out.println("collides is true, tileId = "
-            + cell.getTile().getId());
-        return true;
+      if (c.collision) {
+        c.gameCoords.getCenter(tileCenter);
+        entityPosition.getCenter(entityCenter);
+        if ((tileCenter.x < entityCenter.x)
+            && (Math.abs(tileCenter.y - entityCenter.y) < tileHeight / 2))
+          return true;
       }
     }
     return false;
+  }
+
+  public boolean willCollideUp(Rectangle entityPosition) {
+    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Vector2 tileCenter = new Vector2();
+    Vector2 entityCenter = new Vector2();
+    GameCell c;
+    while (i.hasNext()) {
+      c = (GameCell) i.next();
+
+      if (c.collision) {
+        c.gameCoords.getCenter(tileCenter);
+        entityPosition.getCenter(entityCenter);
+        if ((tileCenter.y > entityCenter.y)
+            && (Math.abs(tileCenter.x - entityCenter.x) < tileWidth / 2))
+          return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean willCollideDown(Rectangle entityPosition) {
+    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Vector2 tileCenter = new Vector2();
+    Vector2 entityCenter = new Vector2();
+    GameCell c;
+    while (i.hasNext()) {
+      c = (GameCell) i.next();
+
+      if (c.collision) {
+        c.gameCoords.getCenter(tileCenter);
+        entityPosition.getCenter(entityCenter);
+        if ((tileCenter.y < entityCenter.y)
+            && (Math.abs(tileCenter.x - entityCenter.x) < tileWidth / 2))
+          return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean willCollideRight(Rectangle entityPosition) {
+    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Vector2 tileCenter = new Vector2();
+    Vector2 entityCenter = new Vector2();
+    GameCell c;
+    while (i.hasNext()) {
+      c = (GameCell) i.next();
+
+      if (c.collision) {
+        c.gameCoords.getCenter(tileCenter);
+        entityPosition.getCenter(entityCenter);
+        if ((tileCenter.x > entityCenter.x)
+            && (Math.abs(tileCenter.y - entityCenter.y) < tileHeight / 2))
+          return true;
+
+      }
+    }
+    return false;
+  }
+
+  private ArrayList<GameCell> getCollidingTiles(Rectangle entityPosition) {
+    ArrayList<GameCell> collidingTiles = new ArrayList<GameCell>();
+    for (int x = 0; x < cells.length; x++) {
+      for (int y = 0; y < cells.length; y++) {
+        if (Intersector.intersectRectangles(entityPosition,
+            cells[x][y].gameCoords, new Rectangle())) {
+          collidingTiles.add(cells[x][y]);
+        }
+      }
+    }
+    return collidingTiles;
+  }
+
+  private void debugMap() {
+    Iterator<MapLayer> i = map.getLayers().iterator();
+    while (i.hasNext()) {
+      System.out.println("######### LAYER ##########");
+
+      TiledMapTileLayer tl = (TiledMapTileLayer) i.next();
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+          Cell cell = tl.getCell(x, y);
+          System.out.println("Cell at (" + x + "," + y + ") is "
+              + cell.getTile().getId());
+        }
+      }
+    }
   }
 
 }

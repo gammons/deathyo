@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class DeathView extends Sprite {
@@ -91,6 +92,10 @@ public class DeathView extends Sprite {
     // killBall = new KillBallView(new Vector2(this.position.x,
     // death.position.y));
     killBall.shootToward(coords.x, coords.y);
+  }
+
+  public Rectangle rectangle() {
+    return new Rectangle(getX(), getY(), getWidth(), getHeight());
   }
 
   private void setAnimation() {

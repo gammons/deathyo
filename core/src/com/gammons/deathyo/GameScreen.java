@@ -74,13 +74,13 @@ public class GameScreen implements Screen {
   }
 
   private void handleInput(float delta) {
-    if (input.isDownPressed())
+    if (input.isDownPressed() && !map.willCollideDown(deathView.rectangle()))
       deathView.moveDown(delta);
-    if (input.isLeftPressed())
+    if (input.isLeftPressed() && !map.willCollideLeft(deathView.rectangle()))
       deathView.moveLeft(delta);
-    if (input.isRightPressed())
+    if (input.isRightPressed() && !map.willCollideRight(deathView.rectangle()))
       deathView.moveRight(delta);
-    if (input.isUpPressed())
+    if (input.isUpPressed() && !map.willCollideUp(deathView.rectangle()))
       deathView.moveUp(delta);
     // if (input.isMousePressed())
     // deathView.shootKillBall(input.getMouseCoords());
