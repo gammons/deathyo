@@ -5,18 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.gammons.deathyo.entities.GameMap;
 
 public class KillBallView {
   private Vector2 velocity = new Vector2();
   private float speedMax = 300;
   private Sprite killBall;
+  private GameMap map;
+  private boolean collided;
 
-  public KillBallView(Vector2 origin) {
-
+  public KillBallView(Vector2 origin, GameMap _map) {
+    map = _map;
     Texture ballTexture = new Texture(Gdx.files.internal("art/ball.png"));
     killBall = new Sprite(ballTexture);
     killBall.setPosition(origin.x, origin.y);
-    killBall.setSize(16, 16);
+    killBall.setSize(8, 8);
 
   }
 
@@ -40,7 +43,13 @@ public class KillBallView {
     v.add(velocity.x * deltaTime, velocity.y * deltaTime);
     killBall.setX(v.x);
     killBall.setY(v.y);
+    if (map.willCollideAny(killBall.getBoundingRectangle())) {
+      collided = true;
+    }
+  }
 
+  public boolean collided() {
+    return collided;
   }
 
   public void render(Batch batch) {

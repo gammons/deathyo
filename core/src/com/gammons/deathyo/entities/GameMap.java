@@ -78,7 +78,7 @@ public class GameMap {
   }
 
   public boolean willCollideLeft(Rectangle entityPosition) {
-    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Iterator<GameCell> i = getCollidingTiles(entityPosition).iterator();
     Vector2 tileCenter = new Vector2();
     Vector2 entityCenter = new Vector2();
     GameCell c;
@@ -97,7 +97,7 @@ public class GameMap {
   }
 
   public boolean willCollideUp(Rectangle entityPosition) {
-    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Iterator<GameCell> i = getCollidingTiles(entityPosition).iterator();
     Vector2 tileCenter = new Vector2();
     Vector2 entityCenter = new Vector2();
     GameCell c;
@@ -116,7 +116,7 @@ public class GameMap {
   }
 
   public boolean willCollideDown(Rectangle entityPosition) {
-    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Iterator<GameCell> i = getCollidingTiles(entityPosition).iterator();
     Vector2 tileCenter = new Vector2();
     Vector2 entityCenter = new Vector2();
     GameCell c;
@@ -135,7 +135,7 @@ public class GameMap {
   }
 
   public boolean willCollideRight(Rectangle entityPosition) {
-    Iterator i = getCollidingTiles(entityPosition).iterator();
+    Iterator<GameCell> i = getCollidingTiles(entityPosition).iterator();
     Vector2 tileCenter = new Vector2();
     Vector2 entityCenter = new Vector2();
     GameCell c;
@@ -150,6 +150,25 @@ public class GameMap {
           return true;
 
       }
+    }
+    return false;
+  }
+
+  public boolean willCollideAny(Rectangle entityPosition) {
+    Iterator<GameCell> i = getCollidingTiles(entityPosition).iterator();
+    GameCell c;
+    Vector2 tileCenter = new Vector2();
+    Vector2 entityCenter = new Vector2();
+    while (i.hasNext()) {
+      c = (GameCell) i.next();
+
+      if (c.collision)
+        c.gameCoords.getCenter(tileCenter);
+      entityPosition.getCenter(entityCenter);
+      if ((Math.abs(tileCenter.x - entityCenter.x) < tileWidth / 2)
+          && (Math.abs(tileCenter.y - entityCenter.y) < tileHeight / 2))
+        return true;
+
     }
     return false;
   }

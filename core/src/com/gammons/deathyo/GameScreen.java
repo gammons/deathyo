@@ -70,7 +70,11 @@ public class GameScreen implements Screen {
 
   private void renderKillBall(Batch spriteBatch) {
     killBallView.update(Gdx.graphics.getDeltaTime());
-    killBallView.render(spriteBatch);
+    if (killBallView.collided()) {
+      killBallDeployed = false;
+    } else {
+      killBallView.render(spriteBatch);
+    }
   }
 
   public void shootKillBall(Vector2 coords) {
@@ -79,7 +83,7 @@ public class GameScreen implements Screen {
       Vector2 center = new Vector2();
       deathView.rectangle().getCenter(center);
 
-      killBallView = new KillBallView(center);
+      killBallView = new KillBallView(center, map);
       killBallView.shootToward(coords.x, coords.y);
     }
   }
