@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gammons.deathyo.entities.GameMap;
 import com.gammons.deathyo.view.DeathView;
+import com.gammons.deathyo.view.KillBallView;
 
 public class GameScreen implements Screen {
 
@@ -25,10 +27,10 @@ public class GameScreen implements Screen {
 
   private DeathView deathView;
   private GameInputProcessor input;
-
   private GameMap map = new GameMap();
-
   private ShapeRenderer shapeRenderer = new ShapeRenderer();
+  private KillBallView killBallView;
+  private boolean killBallDeployed;
 
   public GameScreen(GameInputProcessor _input) {
     input = _input;
@@ -59,8 +61,27 @@ public class GameScreen implements Screen {
     // debugShapes();
     renderer.getSpriteBatch().begin();
     deathView.draw(renderer.getSpriteBatch());
+    if (killBallDeployed)
+      renderKillBall(renderer.getSpriteBatch());
+
     renderer.getSpriteBatch().end();
 
+  }
+
+  private void renderKillBall(Batch spriteBatch) {
+    killBallView.update(Gdx.graphics.getDeltaTime());
+    killBallView.render(spriteBatch);
+  }
+
+  public void shootKillBall(Vector2 coords) {
+    if (!killBallDeployed) {
+      killBallDeployed = true;
+      Vector2 center = new Vector2();
+      deathView.rectangle().getCenter(center);
+
+      killBallView = new KillBallView(center);
+      killBallView.shootToward(coords.x, coords.y);
+    }
   }
 
   private void debugShapes() {
@@ -83,7 +104,7 @@ public class GameScreen implements Screen {
     if (input.isUpPressed() && !map.willCollideUp(deathView.rectangle()))
       deathView.moveUp(delta);
     if (input.isMousePressed()) {
-      deathView.shootKillBall(input.getMouseCoords(camera));
+      shootKillBall(input.getMouseCoords(camera));
     }
   }
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 public class DeathView extends Sprite {
 
@@ -19,17 +18,12 @@ public class DeathView extends Sprite {
 
   private float stateTime = 0;
   private boolean isWalking;
-  private TextureRegion currentTexture;
   private final int TEXTURE_ROWS = 3;
   private final int TEXTURE_COLS = 2;
 
   private final int PIXEL_WIDTH = 16;
   private final int PIXEL_HEIGHT = 16;
   private final int speed = 100;
-
-  private boolean killBallDeployed;
-
-  private KillBallView killBall;
 
   public DeathView() {
     Texture walkSheet = new Texture(Gdx.files.internal("art/death.png"));
@@ -40,7 +34,6 @@ public class DeathView extends Sprite {
     setAnimation();
     setSize(PIXEL_WIDTH, PIXEL_HEIGHT);
 
-    killBallDeployed = false;
   }
 
   @Override
@@ -50,18 +43,8 @@ public class DeathView extends Sprite {
 
     setAnimation();
     super.draw(spriteBatch);
-    renderKillBall(spriteBatch);
-
     isWalking = false;
 
-  }
-
-  public void renderKillBall(Batch spriteBatch) {
-    if (killBallDeployed) {
-      killBall.update(Gdx.graphics.getDeltaTime());
-      killBall.render(spriteBatch);
-
-    }
   }
 
   public void moveUp(float delta) {
@@ -87,17 +70,6 @@ public class DeathView extends Sprite {
     isWalking = true;
     currentAnimation = walkRightAnimation;
     setX(getX() + speed * delta);
-  }
-
-  public void shootKillBall(Vector2 coords) {
-    if (!killBallDeployed) {
-      killBallDeployed = true;
-      Vector2 center = new Vector2();
-      rectangle().getCenter(center);
-
-      killBall = new KillBallView(center);
-      killBall.shootToward(coords.x, coords.y);
-    }
   }
 
   public Rectangle rectangle() {
