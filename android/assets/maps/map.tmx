@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="5" height="5" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="15" height="15" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="sheet_6" tilewidth="16" tileheight="16">
   <image source="../sheet_6.png" width="128" height="208"/>
   <tile id="4">
@@ -34,17 +34,17 @@
   </tile>
   <tile id="20">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="hard"/>
    </properties>
   </tile>
   <tile id="21">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="hard"/>
    </properties>
   </tile>
   <tile id="22">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="hard"/>
    </properties>
   </tile>
   <tile id="31">
@@ -113,14 +113,14 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="5" height="5">
+ <layer name="Tile Layer 1" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJzTY2Bg0MOB9bGIWZCgFoYB7GgEiw==
+   eJzTY2Bg0KMQ61Og12IA7R7Fo3gwYACOESh7
   </data>
  </layer>
- <layer name="Tile Layer 2" width="5" height="5">
+ <layer name="Tile Layer 2" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJzzZGBg8ELC3kAcyIAKgkkQiwTiKCQcDcQA/hQFIQ==
+   eJydkU0OQDAQRmeDVVnhDDZ6DqzECgv3v4VpQvKZzFT5kpf0702n6UBEIzCJuUU4N9MzC9PRexbDvZMxuUKR4DrGK3dW4PbAobjSR1fmfq+76sVcbT+kZpqLEsat4mq+tae5soevbk96HctF31P8Hehif1jHWrNcn4j1vykJ7spsP9iZE7ZVH2k=
   </data>
  </layer>
 </map>
