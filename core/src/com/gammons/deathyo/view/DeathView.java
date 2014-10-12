@@ -3,6 +3,7 @@ package com.gammons.deathyo.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,13 +44,14 @@ public class DeathView extends Sprite {
     killBallDeployed = false;
   }
 
-  public void draw(SpriteBatch spriteBatch) {
+  @Override
+  public void draw(Batch spriteBatch) {
     if (isWalking)
       stateTime += Gdx.graphics.getDeltaTime();
 
     setAnimation();
     super.draw(spriteBatch);
-    renderKillBall(spriteBatch);
+    // renderKillBall(spriteBatch);
     isWalking = false;
 
   }
