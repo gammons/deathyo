@@ -2,7 +2,9 @@ package com.gammons.deathyo;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class GameInputProcessor implements InputProcessor {
   private boolean leftPressed;
@@ -111,9 +113,10 @@ public class GameInputProcessor implements InputProcessor {
     return mousePressed;
   }
 
-  public Vector2 getMouseCoords() {
-    mouseCoords.y = windowHeight - mouseCoords.y;
-    return mouseCoords;
+  public Vector2 getMouseCoords(OrthographicCamera c) {
+    Vector3 v = new Vector3(mouseCoords.x, mouseCoords.y, 0);
+    Vector3 unprojected = c.unproject(v);
+    return new Vector2(unprojected.x, unprojected.y);
   }
 
   public void setWindow(int width, int height) {

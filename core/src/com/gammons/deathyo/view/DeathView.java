@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -51,12 +50,13 @@ public class DeathView extends Sprite {
 
     setAnimation();
     super.draw(spriteBatch);
-    // renderKillBall(spriteBatch);
+    renderKillBall(spriteBatch);
+
     isWalking = false;
 
   }
 
-  public void renderKillBall(SpriteBatch spriteBatch) {
+  public void renderKillBall(Batch spriteBatch) {
     if (killBallDeployed) {
       killBall.update(Gdx.graphics.getDeltaTime());
       killBall.render(spriteBatch);
@@ -90,10 +90,14 @@ public class DeathView extends Sprite {
   }
 
   public void shootKillBall(Vector2 coords) {
-    killBallDeployed = true;
-    // killBall = new KillBallView(new Vector2(this.position.x,
-    // death.position.y));
-    killBall.shootToward(coords.x, coords.y);
+    if (!killBallDeployed) {
+      killBallDeployed = true;
+      Vector2 center = new Vector2();
+      rectangle().getCenter(center);
+
+      killBall = new KillBallView(center);
+      killBall.shootToward(coords.x, coords.y);
+    }
   }
 
   public Rectangle rectangle() {

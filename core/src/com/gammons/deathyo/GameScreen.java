@@ -82,8 +82,9 @@ public class GameScreen implements Screen {
       deathView.moveRight(delta);
     if (input.isUpPressed() && !map.willCollideUp(deathView.rectangle()))
       deathView.moveUp(delta);
-    // if (input.isMousePressed())
-    // deathView.shootKillBall(input.getMouseCoords());
+    if (input.isMousePressed()) {
+      deathView.shootKillBall(input.getMouseCoords(camera));
+    }
   }
 
   @Override
@@ -91,6 +92,7 @@ public class GameScreen implements Screen {
     camera.viewportWidth = width / 2.0f;
     camera.viewportHeight = height / 2.0f;
     camera.update();
+
     input.setWindow(width, height);
 
   }
